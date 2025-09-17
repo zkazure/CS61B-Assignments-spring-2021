@@ -129,31 +129,85 @@ public class Model extends Observable {
         // row 3 is the top
         // after merge you need to clear the tile.
         // delete the previous two tile.
-        for (int col=0; col<board.size(); col++) {
-            int end = 3;
-            for (int row=3; row>=0; row--) {
-                Tile t = board.tile(col, row);
-                if (board.tile(col, row) != null) {
-                    board.move(col, end, t);
-                    changed = true;
-                    score += 1;
-                    for (int row2=row-1; row2>=0; row2--) {
-                        Tile t2 = board.tile(col, row2);
-                        if (board.tile(col, row2) != null) {
-                            if (t2.value()!=t.value()) {
-                                end--;
+        if (side == Side.NORTH) {
+            for (int col=0; col<board.size(); col++) {
+                int end = 3;
+                for (int row=3; row>=0; row--) {
+                    Tile t = board.tile(col, row);
+                    if (board.tile(col, row) != null) {
+                        board.move(col, end, t);
+                        changed = true;
+                        score += 1;
+                        for (int row2=row-1; row2>=0; row2--) {
+                            Tile t2 = board.tile(col, row2);
+                            if (board.tile(col, row2) != null) {
+                                if (t2.value()!=t.value()) {
+                                    end--;
+                                }
+                                board.move(col, end, t2);
+                                t2 = null;
+                                t=null;
+                                break;
                             }
-                            board.move(col, end, t2);
-                            t2 = null;
-                            t=null;
-                            break;
                         }
                     }
                 }
             }
         }
+        else if (side == Side.SOUTH) {
+            for (int col=0; col<board.size(); col++) {
+                int end = 0;
+                for (int row=0; row<board.size(); row++) {
+                    Tile t = board.tile(col, row);
+                    if (board.tile(col, row) != null) {
+                        board.move(col, end, t);
+                        changed = true;
+                        score += 1;
+                        for (int row2=row+1; row2<board.size(); row2++) {
+                            Tile t2 = board.tile(col, row2);
+                            if (board.tile(col, row2) != null) {
+                                if (t2.value()!=t.value()) {
+                                    end++;
+                                }
+                                board.move(col, end, t2);
+                                t2 = null;
+                                t=null;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else if (side == Side.WEST) {
+            for (int row = 0; row<board.size(); row++) {
+                int end = 0;
+                for (int col=0; col<board.size(); col++) {
+                    Tile t = board.tile(col, row);
+                    if (board.tile(col, row) != null) {
+                        board.move(end, row, t);
+                        changed = true;
+                        score += 1;
+                        for (int col2=col+1; col2<board.size(); col2++) {
+                            Tile t2 = board.tile(col2, row);
+                            if (board.tile(col2, row) != null) {
+                                if (t2.value()!=t.value()) {
+                                    end++;
+                                }
+                                board.move(end, row, t2);
+                                t2 = null;
+                                t = null;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }        
         
         checkGameOver();
+        // TODO: what to do after gameover.
+
         if (changed) {
             setChanged();
         }

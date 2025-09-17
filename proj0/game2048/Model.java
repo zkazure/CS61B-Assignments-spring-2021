@@ -114,10 +114,104 @@ public class Model extends Observable {
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
 
+        // iff we will adapt movement
+        // have atleastonespace
+        // else check whether can merge?
+        // direction is important
+        // check same value
+
+        // direction? make a function to adapt to side.
+        // if dir is to swipe up which means switch up
+
+        // there is a big question that in the video
+        // maybe 3 is the upper boundary
+
+        // row 3 is the top
+        // after merge you need to clear the tile.
+        // delete the previous two tile.
+        if (side == Side.NORTH) {
+            for (int col=0; col<board.size(); col++) {
+                int end = 3;
+                for (int row=3; row>=0; row--) {
+                    Tile t = board.tile(col, row);
+                    if (board.tile(col, row) != null) {
+                        board.move(col, end, t);
+                        changed = true;
+                        score += 1;
+                        for (int row2=row-1; row2>=0; row2--) {
+                            Tile t2 = board.tile(col, row2);
+                            if (board.tile(col, row2) != null) {
+                                if (t2.value()!=t.value()) {
+                                    end--;
+                                }
+                                board.move(col, end, t2);
+                                t2 = null;
+                                t=null;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else if (side == Side.SOUTH) {
+            for (int col=0; col<board.size(); col++) {
+                int end = 0;
+                for (int row=0; row<board.size(); row++) {
+                    Tile t = board.tile(col, row);
+                    if (board.tile(col, row) != null) {
+                        board.move(col, end, t);
+                        changed = true;
+                        score += 1;
+                        for (int row2=row+1; row2<board.size(); row2++) {
+                            Tile t2 = board.tile(col, row2);
+                            if (board.tile(col, row2) != null) {
+                                if (t2.value()!=t.value()) {
+                                    end++;
+                                }
+                                board.move(col, end, t2);
+                                t2 = null;
+                                t=null;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else if (side == Side.WEST) {
+            for (int row = 0; row<board.size(); row++) {
+                int end = 0;
+                for (int col=0; col<board.size(); col++) {
+                    Tile t = board.tile(col, row);
+                    if (board.tile(col, row) != null) {
+                        board.move(end, row, t);
+                        changed = true;
+                        score += 1;
+                        for (int col2=col+1; col2<board.size(); col2++) {
+                            Tile t2 = board.tile(col2, row);
+                            if (board.tile(col2, row) != null) {
+                                if (t2.value()!=t.value()) {
+                                    end++;
+                                }
+                                board.move(end, row, t2);
+                                t2 = null;
+                                t = null;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }        
+        
         checkGameOver();
+        // TODO: what to do after gameover.
+
         if (changed) {
             setChanged();
         }
+        
         return changed;
     }
 
@@ -138,6 +232,14 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        // true if any tile is null
+        // only need to use tile() and size()
+        int b_size = b.size();
+        for (int i=0; i<b_size; ++i)
+            for (int j=0; j<b_size; ++j)
+                if (b.tile(i, j) == null)
+                    return true;
+
         return false;
     }
 
@@ -148,6 +250,16 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        int b_size = b.size();
+        for (int i=0; i<b_size; ++i) {
+            for (int j=0; j<b_size; ++j) {
+                if (b.tile(i, j)==null)
+                    continue;
+                if (b.tile(i, j).value() == MAX_PIECE)
+                    return true;                            
+            }
+        }
+
         return false;
     }
 
@@ -159,6 +271,21 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        if (emptySpaceExists(b))
+            return true;
+
+        int b_size = b.size();
+        for (int i=0; i<b_size-1; ++i) {
+            for (int j=0; j<b_size; ++j) {
+                // check one dir per time
+                if (b.tile(i, j).value() == b.tile(i+1, j).value())
+                    return true;
+                else if (b.tile(j, i).value() == b.tile(j, i+1).value())
+                    // change the dir of i, j is efficient. 
+                    return true;
+            }
+        }
+
         return false;
     }
 

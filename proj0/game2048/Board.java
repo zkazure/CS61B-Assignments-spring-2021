@@ -87,7 +87,7 @@ public class Board implements Iterable<Tile> {
      * */
     public boolean move(int col, int row, Tile tile) {
         int pcol = viewPerspective.col(col, row, size()),
-                prow = viewPerspective.row(col, row, size());
+            prow = viewPerspective.row(col, row, size());
         if (tile.col() == pcol && tile.row() == prow) {
             return false;
         }

@@ -114,10 +114,50 @@ public class Model extends Observable {
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
 
+        // iff we will adapt movement
+        // have atleastonespace
+        // else check whether can merge?
+        // direction is important
+        // check same value
+
+        // direction? make a function to adapt to side.
+        // if dir is to swipe up which means switch up
+
+        // there is a big question that in the video
+        // maybe 3 is the upper boundary
+
+        // row 3 is the top
+        // after merge you need to clear the tile.
+        // delete the previous two tile.
+        for (int col=0; col<board.size(); col++) {
+            int end = 3;
+            for (int row=3; row>=0; row--) {
+                Tile t = board.tile(col, row);
+                if (board.tile(col, row) != null) {
+                    board.move(col, end, t);
+                    changed = true;
+                    score += 1;
+                    for (int row2=row-1; row2>=0; row2--) {
+                        Tile t2 = board.tile(col, row2);
+                        if (board.tile(col, row2) != null) {
+                            if (t2.value()!=t.value()) {
+                                end--;
+                            }
+                            board.move(col, end, t2);
+                            t2 = null;
+                            t=null;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
         checkGameOver();
         if (changed) {
             setChanged();
         }
+        
         return changed;
     }
 

@@ -129,6 +129,78 @@ public class Model extends Observable {
         // row 3 is the top
         // after merge you need to clear the tile.
         // delete the previous two tile.
+
+        // you can use the board.setViewingPerspective()
+        // it allow you to only write the NORTH move
+        board.setViewingPerspective(side);
+
+        for (int col=0; col<board.size(); col++) {
+            // for each column, I want to find one row with tile
+            
+            int merged = 4;
+            for (int row=3; row>=0; row--) {
+                // must search every row of board
+                if (tile(col, row) != null) {
+                    Tile t1 = tile(col, row);
+                    changed = true;
+
+                    // int end = 4;
+                    boolean no_moved = true;
+                    for (int move_to=row+1; move_to<board.size() && move_to<merged; move_to++) {
+                        // search for a tile above
+                        if (board.tile(col, move_to) == null)
+                            continue;
+                        // found t2
+                        Tile t2 = tile(col, move_to);
+                        if (t1.value() == t2.value()) {
+                            score += 2*t1.value();
+                            board.move(col, move_to, t1);
+                            merged = move_to;
+                            t1 = null;
+                            t2 = null;
+                        } else {
+                            board.move(col, move_to-1, t1);
+                        }
+                        no_moved = false;
+                        break; // if found, no need to search next one
+                    }
+                    if (no_moved)
+                        board.move(col, merged-1, t1);
+
+
+                } // no else
+            }
+
+            
+        }
+        
+/*
+        for (int col=0; col<board.size(); col++) {
+            int end = 3;
+            for (int row=3; row>=0; row--) {
+                Tile t = board.tile(col, row);
+                if (board.tile(col, row) != null) {
+                    board.move(col, end, t);
+                    changed = true;
+                    score += 1;
+                    for (int row2=row-1; row2>=0; row2--) {
+                        Tile t2 = board.tile(col, row2);
+                        if (board.tile(col, row2) != null) {
+                            if (t2.value()!=t.value()) {
+                                end--;
+                            }
+                            board.move(col, end, t2);
+                            t2 = null;
+                            t=null;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+*/
+        board.setViewingPerspective(Side.NORTH);
+        /*
         if (side == Side.NORTH) {
             for (int col=0; col<board.size(); col++) {
                 int end = 3;
@@ -203,7 +275,7 @@ public class Model extends Observable {
                     }
                 }
             }
-        }        
+        } */       
         
         checkGameOver();
         // TODO: what to do after gameover.
@@ -211,6 +283,7 @@ public class Model extends Observable {
         if (changed) {
             setChanged();
         }
+
         
         return changed;
     }

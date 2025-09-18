@@ -142,7 +142,6 @@ public class Model extends Observable {
                 // must search every row of board
                 if (tile(col, row) != null) {
                     Tile t1 = tile(col, row);
-                    changed = true;
 
                     // int end = 4;
                     boolean no_moved = true;
@@ -155,18 +154,22 @@ public class Model extends Observable {
                         if (t1.value() == t2.value()) {
                             score += 2*t1.value();
                             board.move(col, move_to, t1);
+                            changed = true;
                             merged = move_to;
                             t1 = null;
                             t2 = null;
-                        } else {
+                        } else if (row != move_to-1){
                             board.move(col, move_to-1, t1);
-
+                            changed = true;
                         }
                         no_moved = false;
                         break; // if found, no need to search next one
                     }
-                    if (no_moved)
+                    if (no_moved && row != merged-1) {
+                        changed = true;
                         board.move(col, merged-1, t1);
+                    }
+
                 } // no else
             }
 

@@ -160,19 +160,13 @@ public class Model extends Observable {
                             t2 = null;
                         } else {
                             board.move(col, move_to-1, t1);
-                            if (row==move_to-1)
-                                changed = false;
+
                         }
                         no_moved = false;
                         break; // if found, no need to search next one
                     }
-                    if (no_moved) {
+                    if (no_moved)
                         board.move(col, merged-1, t1);
-                        if (row == merged-1)
-                            changed = false;
-                    }
-
-
                 } // no else
             }
 

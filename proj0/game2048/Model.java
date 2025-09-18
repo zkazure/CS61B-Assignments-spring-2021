@@ -153,6 +153,7 @@ public class Model extends Observable {
                         // found t2
                         Tile t2 = tile(col, move_to);
                         if (t1.value() == t2.value()) {
+                            score += 2*t1.value();
                             board.move(col, move_to, t1);
                             merged = move_to;
                             t1 = null;

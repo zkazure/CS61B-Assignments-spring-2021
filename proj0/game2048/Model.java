@@ -136,8 +136,8 @@ public class Model extends Observable {
 
         for (int col=0; col<board.size(); col++) {
             // for each column, I want to find one row with tile
-            // int merged = 4;
             
+            int merged = 4;
             for (int row=3; row>=0; row--) {
                 // must search every row of board
                 if (tile(col, row) != null) {
@@ -146,7 +146,7 @@ public class Model extends Observable {
 
                     // int end = 4;
                     boolean no_moved = true;
-                    for (int move_to=row+1; move_to<board.size(); move_to++) {
+                    for (int move_to=row+1; move_to<board.size() && move_to<merged; move_to++) {
                         // search for a tile above
                         if (board.tile(col, move_to) == null)
                             continue;
@@ -154,6 +154,7 @@ public class Model extends Observable {
                         Tile t2 = tile(col, move_to);
                         if (t1.value() == t2.value()) {
                             board.move(col, move_to, t1);
+                            merged = move_to;
                             t1 = null;
                             t2 = null;
                         } else {
@@ -163,7 +164,7 @@ public class Model extends Observable {
                         break; // if found, no need to search next one
                     }
                     if (no_moved)
-                        board.move(col, 3, t1);
+                        board.move(col, merged-1, t1);
 
 
                 } // no else

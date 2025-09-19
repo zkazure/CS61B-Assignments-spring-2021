@@ -10,6 +10,13 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath>../library-sp21/javalib/masterpom.xml</relativePath>
     </parent>
+    
+    <repositories>
+      <repository>
+        <id>cs61b-repo</id>
+        <url>file://${project.basedir}/../library-sp21/javalib</url>
+      </repository>
+    </repositories>        
 
     <groupId>CS61B</groupId>
     <artifactId>lab2</artifactId>

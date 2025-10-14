@@ -105,7 +105,7 @@ public class LinkedListDeque<T> {
         return getRecursiveHelper(sentinel.next, index, 0);
     }
 
-    public LinkedListDeque(LinkedListDeque other) {
+    public LinkedListDeque(LinkedListDeque<T> other) {
         size = 0;
         sentinel = new Node(sentinel, null, sentinel);
 

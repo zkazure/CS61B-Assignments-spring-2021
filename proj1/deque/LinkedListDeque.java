@@ -87,28 +87,30 @@ public class LinkedListDeque<T> {
         return tmp_node.item;
     }
     
+ 
+    private T getRecursiveHelper(Node curr, int index, int count) {
+        if (count == index) 
+            return curr.item;
+
+        if (curr == sentinel) 
+            return null;
+        
+        return getRecursiveHelper(curr.next, index, count + 1);
+    }
 
     public T getRecursive(int index) {
-        if (index<0 || size==0 || index>=size)
-            return null;        
-        public class GetHelper {
-            public T helper(Node cur_node, int cur_idx) {
-                if (cur_idx==index)
-                    return cur_node.item;
-                else return helper(cur_node.next, cur_idx+1);
-            }
-        }
-        GetHelper thisHelp = new GetHelper();
-        
-        return thisHelp.helper(sentinel.next, 0);
+        if (index < 0 || size == 0 || index >= size)
+            return null;
+            
+        return getRecursiveHelper(sentinel.next, index, 0);
     }
-    
+
     public LinkedListDeque(LinkedListDeque other) {
         size = 0;
         sentinel = new Node(sentinel, null, sentinel);
 
         for (int i=0; i<other.size(); i+=1) {
-            addLast((T) other.get(i));
+            addLast(other.get(i));
         }
     }
 }

@@ -91,9 +91,9 @@ public class LinkedListDeque<T> {
     public T getRecursive(int index) {
         if (index<0 || size==0 || index>=size)
             return null;        
-        private class GetHelper {
+        public class GetHelper {
             public T helper(Node cur_node, int cur_idx) {
-                if (cur_idx==idx)
+                if (cur_idx==index)
                     return cur_node.item;
                 else return helper(cur_node.next, cur_idx+1);
             }

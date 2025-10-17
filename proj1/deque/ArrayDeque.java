@@ -20,7 +20,7 @@ public class ArrayDeque<T> {
     }
 
     public ArrayDeque(ArrayDeque other) {
-        size = other.size();
+        int size = other.size();
         items = (T[]) new Object[size];
         System.arraycopy(other.items, other.head, items, 0, size);
     }
@@ -50,13 +50,19 @@ public class ArrayDeque<T> {
     public T removeLast() {
         T ret = get(tail);
         tail = (tail-1+capacity) % capacity;
-        return ret;g
+        return ret;
     }
 
     public T get(int idx) {
         if (idx < 0 || idx >= size)
             return null;
         return items[idx];
+    }
+
+    public boolean isEmpty() {
+        if (size()>0)
+            return false;
+        return true;
     }
 
     public int size() {

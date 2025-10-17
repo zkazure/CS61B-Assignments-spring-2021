@@ -7,7 +7,7 @@ public class ArrayDeque<T> {
     private int tail;
 
     private void resize(int new_capacity) {
-        T[] new_items = (T[]) Object[new_capacity];
+        T[] new_items = (T[]) new Object[new_capacity];
         System.arraycopy(items, head, new_items, 0, capacity);
         items = new_items;
     }
@@ -54,7 +54,7 @@ public class ArrayDeque<T> {
     }
 
     public T get(int idx) {
-        if (idx < 0 || idx >= size)
+        if (idx < 0 || idx >= size())
             return null;
         return items[idx];
     }

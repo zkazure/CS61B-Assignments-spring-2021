@@ -14,16 +14,15 @@ public class LinkedListDeque<T> {
             prev = null;
             next = null;
         }
-        public Node(Node p, T i, Node n) {
-            prev = p;
-            item = i;
-            next = n;
-        }
     }
     
     public LinkedListDeque() {
         size = 0;
-        sentinel = new Node(sentinel, null, sentinel);
+        // initialize sentinel node so prev/next point to itself
+        sentinel = new Node();
+        sentinel.item = null;
+        sentinel.prev = sentinel;
+        sentinel.next = sentinel;
     }
 
     public int size() {
@@ -32,13 +31,21 @@ public class LinkedListDeque<T> {
     
     public void addFirst(T item) {
         size += 1;
-        Node new_item = new Node(sentinel, item, sentinel.next);
+        Node new_item = new Node(); 
+        new_item.prev = sentinel; 
+        new_item.item = item; 
+        new_item.next = sentinel.next;
+
         sentinel.next.prev = new_item;
         sentinel.next = new_item;
     }
     public void addLast(T item) {
         size += 1;
-        Node new_item = new Node(sentinel.prev, item, sentinel);
+        Node new_item = new Node();
+        new_item.prev = sentinel.prev;
+        new_item.item = item;
+        new_item.next = sentinel;
+        
         sentinel.prev.next = new_item;
         sentinel.prev = new_item;
     }
@@ -47,8 +54,8 @@ public class LinkedListDeque<T> {
     }
     public void printDeque() {
         Node tmp = sentinel.next;
-        while (tmp.item != null) {
-            System.out.print(tmp.item+" ");
+        while (tmp != sentinel) {
+            System.out.print(tmp.item + " ");
             tmp = tmp.next;
         }
         System.out.println();
@@ -78,12 +85,9 @@ public class LinkedListDeque<T> {
             return null;
 
         Node tmp_node = sentinel.next;
-        int tmp_idx = 0;
-        while (tmp_idx <= index) {
+        for (int i = 0; i < index; i++) {
             tmp_node = tmp_node.next;
-            tmp_idx += 1;
         }
-
         return tmp_node.item;
     }
     
@@ -107,9 +111,13 @@ public class LinkedListDeque<T> {
 
     public LinkedListDeque(LinkedListDeque<T> other) {
         size = 0;
-        sentinel = new Node(sentinel, null, sentinel);
+        // initialize empty sentinel, then add items from other
+        sentinel = new Node();
+        sentinel.item = null;
+        sentinel.prev = sentinel;
+        sentinel.next = sentinel;
 
-        for (int i=0; i<other.size(); i+=1) {
+        for (int i = 0; i < other.size(); i += 1) {
             addLast(other.get(i));
         }
     }

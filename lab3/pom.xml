@@ -8,7 +8,8 @@
         <groupId>CS61B</groupId>
         <artifactId>61BMasterPom</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../library-sp21/javalib/masterpom.xml</relativePath>
+        <!-- <relativePath>../library-sp21/javalib/masterpom.xml</relativePath> -->
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <repositories>

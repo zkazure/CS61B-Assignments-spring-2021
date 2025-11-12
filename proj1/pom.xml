@@ -10,14 +10,7 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath>../library-sp21/javalib/masterpom.xml</relativePath>
     </parent>
- 
-    <repositories>
-      <repository>
-        <id>cs61b-repo</id>
-        <url>file://${project.basedir}/../library-sp21/javalib</url>
-      </repository>
-    </repositories>        
-   
+
     <groupId>CS61B</groupId>
     <artifactId>proj1</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -29,31 +22,21 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.1</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
-                    <compilerArgs>
-                        <arg>-J-XX:+ShowCodeDetailsInExceptionMessages</arg>
-                    </compilerArgs>
+                    <source>1.14</source>
+                    <target>1.14</target>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
-                    <!-- ensure JUnit4 provider is used -->
-                    <forkCount>1</forkCount>
-                    <reuseForks>true</reuseForks>
+                    <compilerArgs>
+                        <arg>-J-XX:+ShowCodeDetailsInExceptionMessages</arg>
+                    </compilerArgs>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.surefire</groupId>
-                        <artifactId>surefire-junit4</artifactId>
-                        <version>2.22.2</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>

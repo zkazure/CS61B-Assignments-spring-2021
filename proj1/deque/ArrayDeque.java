@@ -3,12 +3,12 @@ package deque;
 public class ArrayDeque<T> {
     private T[] items;
     private int size;
-    private int nextFirst=0;
-    private int nextLast=1;
+    private int nextFirst;
+    private int nextLast;
 
     private void resize(int new_capacity) {
         T[] new_items = (T[]) new Object[new_capacity];
-        int first = (nextFirst+1)%items.length; 
+        int first = (nextFirst+1)%items.length;
         if (first+size<=capacity()) {
             System.arraycopy(items, first, new_items, 0, size);
         } else {
@@ -69,6 +69,9 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
+        if (size == 0) {
+            return null;
+        }
         nextFirst = (nextFirst+1)%items.length;
         size -= 1;
         T ret = items[nextFirst];
@@ -80,6 +83,9 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast() {
+        if (size == 0) {
+            return null;
+        }
         nextLast = (nextLast-1+items.length)%items.length;
         size -= 1; 
         T ret = items[nextLast];
@@ -93,8 +99,8 @@ public class ArrayDeque<T> {
     public T get(int idx) {
         if (idx>=size || idx<0)
             return null;
-        if (idx <= nextFirst && idx >= nextLast)
-            return null;
+//        if (idx <= nextFirst && idx >= nextLast)
+//            return null;
         idx = (nextFirst +1 + idx) % items.length;
         return items[idx];
     }
@@ -105,5 +111,13 @@ public class ArrayDeque<T> {
 
     public int size() {
         return size;
+    }
+
+    public void printDeque() {
+        for (int i=0; i<size; i+=1) {
+            int idx = (nextFirst+1+i)%size;
+            System.out.print(items[idx] + " ");
+        }
+        System.out.println();
     }
 }

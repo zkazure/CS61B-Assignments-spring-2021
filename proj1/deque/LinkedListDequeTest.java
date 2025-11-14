@@ -1,5 +1,6 @@
 package deque;
 
+import jh61b.junit.In;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -119,6 +120,18 @@ public class LinkedListDequeTest {
             assertEquals("Should have the same value", i, (double) lld1.removeLast(), 0.0);
         }
 
+    }
+
+    @Test
+    public void equalsTest() {
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
+        LinkedListDeque<Integer> lld2 = new LinkedListDeque<>();
+        for (int i=0; i<100; i++) {
+            lld1.addLast(i);
+            lld2.addLast(i);
+        }
+
+        assertEquals(lld1, lld2);
     }
 
 }

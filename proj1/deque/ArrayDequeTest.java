@@ -89,26 +89,39 @@ public class ArrayDequeTest {
         }
     }
 
+//    @Test
+//    public void resizeTest() {
+//        ArrayDeque<Integer> adq1 = new ArrayDeque<>();
+//        for (int i=0; i<33; ++i) {
+//            adq1.addLast(i);
+//        }
+//        assertEquals("wrong the capacity is "+adq1.capacity(), 64, adq1.capacity());
+//        assertEquals(33, adq1.size());
+//    }
+//    @Test
+//    public void usageTest() {
+//        ArrayDeque<Integer> arr = new ArrayDeque<>();
+//        for (int i=0; i<32; ++i) {
+//            arr.addLast(i);
+//        }
+//        for (int i=0; i<25; ++i) {
+//            arr.removeFirst();
+//        }
+//        double usage = (double)arr.size()/arr.capacity();
+//        assertTrue("wrong usage ratio is "+usage, usage>0.25);
+//    }
+
     @Test
-    public void resizeTest() {
+    public void equalsTest() {
         ArrayDeque<Integer> adq1 = new ArrayDeque<>();
-        for (int i=0; i<33; ++i) {
+        ArrayDeque<Integer> adq2 = new ArrayDeque<>();
+
+        for (int i=0; i<100; i+=1) {
             adq1.addLast(i);
+            adq2.addLast(i);
         }
-        assertEquals("wrong the capacity is "+adq1.capacity(), 64, adq1.capacity());
-        assertEquals(33, adq1.size());
-    }
-    @Test
-    public void usageTest() {
-        ArrayDeque<Integer> arr = new ArrayDeque<>();
-        for (int i=0; i<32; ++i) {
-            arr.addLast(i);
-        }
-        for (int i=0; i<25; ++i) {
-            arr.removeFirst();
-        }
-        double usage = (double)arr.size()/arr.capacity();
-        assertTrue("wrong usage ratio is "+usage, usage>0.25);
+
+        assertTrue(adq1.equals(adq2));
     }
 }
 

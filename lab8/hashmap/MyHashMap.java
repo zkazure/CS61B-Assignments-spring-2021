@@ -31,7 +31,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     private int N;
     private int M;
     private final double loadFactor;
-    private Set<K> keySet = new HashSet<>();;
+    private Set<K> keySet = new HashSet<>();
 
     /** Constructors */
     public MyHashMap() {
@@ -182,7 +182,17 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     }
     
     @Override
-    public V remove(K key) { throw new UnsupportedOperationException(); }
+    public V remove(K key) {
+        V deleted = null;
+        for (Node node : buckets[hashCode(key)]) {
+            if (node.key.equals(key)) {
+                deleted = node.value;
+                buckets[hashCode(key)].remove(node);
+                keySet.remove(key);
+            }
+        }
+        return deleted;
+    }
 
     @Override
     public V remove(K key, V value) { throw new UnsupportedOperationException(); }

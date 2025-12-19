@@ -1,6 +1,8 @@
 package gitlet;
 
 import java.io.File;
+import java.io.IOException;
+
 import static gitlet.Utils.*;
 
 // TODO: any imports you need here
@@ -24,6 +26,22 @@ public class Repository {
     public static final File CWD = new File(System.getProperty("user.dir"));
     /** The .gitlet directory. */
     public static final File GITLET_DIR = join(CWD, ".gitlet");
+    public static final File OBJECTS_DIR = join(GITLET_DIR, "objects");
+    public static final File REFS_DIR = join(GITLET_DIR, "refs");
+    public static final File HEAD = join(GITLET_DIR, "HEAD");
+    public static final File INDEX = join(GITLET_DIR, "index");
+
+    public static void initializeRepo() {
+        try {
+            GITLET_DIR.mkdir();
+            OBJECTS_DIR.mkdir();
+            REFS_DIR.mkdir();
+            HEAD.createNewFile();
+            INDEX.createNewFile();
+        } catch (IOException ignore) {}
+
+        // TODO: first commit
+    }
 
     /* TODO: fill in the rest of this class. */
 }
